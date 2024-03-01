@@ -34,7 +34,7 @@ const MobileNav = () => {
           {isAuthenticated ? (
             <MobileNavUserMenu />
           ) : (
-            <Button className=" flex-1 font-bold bg-yellow-500">Login</Button>
+            <Button onClick={async()=> await loginWithRedirect() } className=" flex-1 font-bold bg-yellow-500">Login</Button>
           )}
         </SheetDescription>
       </SheetContent>
