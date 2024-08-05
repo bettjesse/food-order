@@ -56,23 +56,17 @@ type CreateUserResponse = {
   country?: string;
 };
 
-type CreateUserDataWithHeaders = {
-  data: CreateUserRequest;
-  headers: Record<string, string>;
-};
+
 
 // Create API slice
 const myUserApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    createUser: builder.mutation<CreateUserResponse, CreateUserDataWithHeaders>({
-      query: ({ data, headers }) => ({
+    createUser: builder.mutation<CreateUserResponse, CreateUserRequest>({
+      query: (data) => ({
         url: '/api/my/user',
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          ...headers,
-        },
         body: data,
+        credentials: 'include',
       }),
     }),
   }),

@@ -4,12 +4,13 @@ import { useEffect, useRef } from "react"
 import { useNavigate} from "react-router-dom"
 import { useCreateMyUser } from "@/api/MyuserApi"
 
+
 const AuthCallbackPage = () => {
     const navigate= useNavigate()
     const {user}= useAuth0()
     const {createUser} = useCreateMyUser()
   
- 
+
 // seting  has created user to false initially 
     const hasCreatedUser = useRef(false)
    
@@ -17,7 +18,7 @@ const AuthCallbackPage = () => {
         if(user?.sub && user?.email && !hasCreatedUser.current) {
             const auth0Id = user.sub || ""
             
-            createUser({auth0Id, email: user.email })
+        createUser({auth0Id, email: user.email })
             hasCreatedUser.current= true
            }
            navigate("/")
@@ -30,3 +31,4 @@ const AuthCallbackPage = () => {
 }
 
 export default AuthCallbackPage
+

@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import './global.css'
 import AppRoutes from './AppRoutes'
 
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -19,12 +20,13 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
 
   <Router>
+
   <QueryClientProvider client={queryClient}>
     <Auth0ProviderWithNavigate>
     <AppRoutes/>
     </Auth0ProviderWithNavigate>
     </QueryClientProvider>
-
+   
   </Router>
   </React.StrictMode>,
 )

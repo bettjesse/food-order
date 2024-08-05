@@ -1,8 +1,33 @@
-import { fetchBaseQuery ,createApi}from "@reduxjs/toolkit/query/react"
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
-const baseQuery =  fetchBaseQuery({baseUrl: API_BASE_URL})
+import { createApi } from "@reduxjs/toolkit/query/react";
+import { baseQueryWithAuth } from "@/hooks/basequeryWithAuth";// Adjust the import path as necessary
 
-export const  apiSlice =  createApi({
-    baseQuery,
-    endpoints: (builder) => ({}),
-})
+// Define types for the request and response
+type CreateUserRequest = {
+  auth0Id: string;
+  email: string;
+};
+
+type CreateUserResponse = {
+  auth0Id: string;
+  email: string;
+  name?: string;
+  phoneNumber?: string;
+  address?: string;
+  city?: string;
+  country?: string;
+};
+
+export const createApiSlice = (token: string | null) => {
+  return createApi({
+    baseQuery: baseQueryWithAuth(token),
+    endpoints: (builder) => ({
+      createUser: builder.mutation<CreateUserResponse, CreateUserRequest>({
+        query: (data) => ({
+          url: '/api/my/user',
+          method: 'POST',
+          body: data,
+        }),
+      }),
+    }),
+  });
+};
