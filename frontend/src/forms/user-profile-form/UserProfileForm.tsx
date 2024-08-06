@@ -13,6 +13,8 @@ import {
 import { Input } from "@/components/ui/input";
 import LoadingButton from "@/components/LoadingButton";
 import { Button } from "@/components/ui/button";
+import { User } from "@/types";
+import { useEffect } from "react";
 
 const formSchema = z.object({
   email: z.string().optional(),
@@ -25,14 +27,21 @@ const formSchema = z.object({
 type UserFormData = z.infer<typeof formSchema>;
 
 type UserProfileFormProps = {
+  currentUser:User
   onSave: (userProfileData: UserFormData) => void;
   isLoading: boolean;
 };
 
-const UserProfileForm = ({ isLoading, onSave }: UserProfileFormProps) => {
+const UserProfileForm = ({ isLoading, onSave,currentUser }: UserProfileFormProps) => {
   const form = useForm<UserFormData>({
     resolver: zodResolver(formSchema),
+    defaultValues: currentUser
   });
+  // if the component rerenders and the current user changes this will cause the reset function to be called which causes the form to re render based on the new data passed to the reset function
+  useEffect(()=>{
+    form.reset(currentUser)
+
+  },[currentUser,form])
   return (
     <Form {...form}>
       <form
